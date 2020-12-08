@@ -38,4 +38,4 @@ jobs:
       - name: pytest
         run: poetry run pytest tests/
       - name: Static code check w. mypy
-        run: mypy .
+        run: poetry run mypy .
