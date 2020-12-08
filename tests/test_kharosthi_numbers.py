@@ -1,0 +1,33 @@
+import pytest
+
+from kharosthi import KharosthiNumber
+
+
+def test_create():
+    num = KharosthiNumber("𐩃")
+
+def test_cannot_supply_invalid_kharosthi_numbers_to_constructor():
+    with pytest.raises(Exception):
+        num = KharosthiNumber(1)
+
+def test_create_from_single_representable_int():
+    num = KharosthiNumber.from_int(3)
+    assert str(num) == "𐩂"
+
+    assert str(KharosthiNumber.from_int(1)) == "𐩀"
+
+int_to_kharosthi = [
+    (5,"𐩃𐩀"),
+    (6,"𐩃𐩁"),
+    (7,"𐩃𐩂"),
+    (8,"𐩃𐩃"),
+    (9,"𐩃𐩃𐩀"),
+    (99, "𐩅𐩅𐩅𐩅𐩄𐩃𐩃𐩀"),
+    (1996, "𐩇𐩃𐩃𐩀𐩆𐩅𐩅𐩅𐩅𐩄𐩃𐩁")
+]
+
+@pytest.mark.parametrize("input, expected", int_to_kharosthi)
+def test_create_from_non_mappable_int(input, expected):
+    num = KharosthiNumber.from_int(input)
+
+    assert str(num) == expected
