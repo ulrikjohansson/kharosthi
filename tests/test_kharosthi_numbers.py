@@ -36,7 +36,7 @@ def test_create_from_non_mappable_int(input, expected):
 def test_convert_kharosthi_to_int(input, expected):
     num = KharosthiNumber(input)
 
-    assert num.to_int() == expected
+    assert int(num) == expected
 
 invalid_kharosthi_representations = [
     "𐩅𐩅𐩅𐩅𐩅",
@@ -46,3 +46,21 @@ invalid_kharosthi_representations = [
 def test_invalid_kharosthi_representations(input):
     with pytest.raises(ValueError):
         num = KharosthiNumber(input)
+
+def test_negative_numbers_are_invalid():
+    with pytest.raises(ValueError):
+        num = KharosthiNumber.from_int(-1)
+
+def test_subtraction():
+    num = KharosthiNumber.from_int(4) - KharosthiNumber.from_int(2)
+    assert num == KharosthiNumber.from_int(2)
+
+def test_negative_results_are_invalid():
+    with pytest.raises(ValueError):
+        num = KharosthiNumber.from_int(4) - KharosthiNumber.from_int(5)
+
+def test_addition():
+    num1 = KharosthiNumber.from_int(150)
+    num2 = KharosthiNumber.from_int(3200)
+
+    assert num1 + num2 == KharosthiNumber.from_int(3350)
