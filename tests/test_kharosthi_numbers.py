@@ -64,3 +64,8 @@ def test_addition():
     num2 = KharosthiNumber.from_int(3200)
 
     assert num1 + num2 == KharosthiNumber.from_int(3350)
+
+def test_big_number():
+    num = KharosthiNumber.from_int(1_000_000)
+    
+    assert int(num) == 1_000_000
