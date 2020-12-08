@@ -31,3 +31,18 @@ def test_create_from_non_mappable_int(input, expected):
     num = KharosthiNumber.from_int(input)
 
     assert str(num) == expected
+
+@pytest.mark.parametrize("expected, input", int_to_kharosthi)
+def test_convert_kharosthi_to_int(input, expected):
+    num = KharosthiNumber(input)
+
+    assert num.to_int() == expected
+
+invalid_kharosthi_representations = [
+    "𐩅𐩅𐩅𐩅𐩅",
+    "𐩃𐩃𐩃𐩆"
+]
+@pytest.mark.parametrize("input", invalid_kharosthi_representations)
+def test_invalid_kharosthi_representations(input):
+    with pytest.raises(ValueError):
+        num = KharosthiNumber(input)

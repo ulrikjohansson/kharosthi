@@ -1,4 +1,5 @@
 import re
+from typing import List
 
 class KharosthiNumber():
 
@@ -12,15 +13,20 @@ class KharosthiNumber():
         100: "𐩆",
         1000: "𐩇"
     }
+
+    kharosthi_to_int = dict((v,k) for k,v in int_to_kharosthi.items())
+
     valid_regex = re.compile(r'[^𐩀𐩁𐩂𐩃𐩄𐩅𐩆𐩇]')
 
     
 
     number: str
+    int_number: int
 
     def __init__(self, number:str) -> None:
         self.validate(number)
         self.number = number
+        self.int_number = self._kharosthi_to_int(number)
 
     def validate(self, number:str):
         #check that the number is a string and only contains valid digits
@@ -63,9 +69,51 @@ class KharosthiNumber():
         # we can't convert this number
         raise ValueError("Input can't be converted to a Kharosthi number")
 
+    def _kharosthi_to_int(self, number:str) -> int:
+        result = 0
+        #convert to list of ints
+        int_list = [self.kharosthi_to_int[x] for x in number]
+
+        singles: List[int] = []
+        hundreds: List[int] = []
+        hundreds_present = 0
+        thousands: List[int] = []
+        thousands_present = 0
+        bucket = singles
+        while len(int_list):
+            x = int_list.pop()
+            if x == 100:
+                bucket = hundreds
+                if hundreds_present == 100:
+                    raise ValueError("Invalid Kharosthi representation")
+                hundreds_present = 100
+            elif x == 1000:
+                bucket = thousands
+                if thousands_present == 1000:
+                    raise ValueError("Invalid Kharosthi representation")
+                thousands_present = 1000
+            else:
+                bucket.append(x)
+
+        singles_sum = sum(singles)
+        if singles_sum >= 100:
+            raise ValueError("Invalid Kharosthi representation")
+        hundreds_sum = sum(hundreds)*100 if len(hundreds) else hundreds_present
+        if hundreds_sum >= 1000:
+            raise ValueError("Invalid Kharosthi representation")
+        thousands_sum = sum(thousands)*1000 if len(thousands) else thousands_present
+        result = singles_sum + hundreds_sum + thousands_sum
+
+        if result == 0:
+            raise ValueError("Can't be converted to an int")
+        return result
+
     def __str__(self) -> str:
         return self.number
 
     @classmethod
     def from_int(cls, int_number:int):
         return cls(cls._int_to_kharosthi(int_number))
+
+    def to_int(self) -> int:
+        return self._kharosthi_to_int(self.number)
