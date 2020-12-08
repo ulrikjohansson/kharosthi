@@ -27,7 +27,7 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: add local bin to PATH
-        run: export PATH=$PATH:/home/runner/.local/bin
+        run: echo "/home/runner/.local/bin" >> $GITHUB_PATH
       - name: install poetry
         run: pip install poetry
       - name: install packages into venv
