@@ -1,5 +1,5 @@
 import re
-from typing import List
+from typing import List, SupportsInt
 
 class KharosthiNumber():
 
@@ -110,6 +110,21 @@ class KharosthiNumber():
 
     def __str__(self) -> str:
         return self.number
+
+    def __int__(self) -> int:
+        return self.int_number
+
+    def __add__(self, other):
+        return self.__class__.from_int(self.int_number + int(other))
+
+    def __sub__(self, other):
+        return self.__class__.from_int(self.int_number - int(other))
+
+    def __eq__(self, o: object) -> bool:
+        if isinstance(o, SupportsInt):
+            return self.int_number == int(o)
+        
+        return False
 
     @classmethod
     def from_int(cls, int_number:int):
