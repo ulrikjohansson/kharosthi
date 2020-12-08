@@ -26,6 +26,8 @@ jobs:
       - uses: actions/checkout@v2
 
       # Runs a single command using the runners shell
+      - name: add local bin to PATH
+        run: export PATH=$PATH:/home/runner/.local/bin
       - name: install poetry
         run: pip install poetry
       - name: install packages into venv
