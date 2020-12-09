@@ -102,6 +102,9 @@ class KharosthiNumber():
         if hundreds_sum >= 1000:
             raise ValueError("Invalid Kharosthi representation")
         thousands_sum = sum(thousands)*1000 if len(thousands) else thousands_present
+        if thousands_sum >= 10000:
+            raise ValueError("Invalid Kharosthi representation. Max representable number is 9999")
+
         result = singles_sum + hundreds_sum + thousands_sum
 
         if result == 0:
