@@ -1,5 +1,5 @@
 # Kharosthi numbers
-A naive representation of Kharosthi numerals, and a way to do simple arithmetic on them.
+A naive representation of Kharosthi numerals, and a way to do simple arithmetic on them (actually, we're cheating and doing arithmetic on `int` versions of the numbers).
 
 Currently only supports numbers less than 10000. The naive conversion algorithm currently can't deal with arbitrarily big numbers, so we only support "𐩇" with a maximum value of 9 in front of it.
 
