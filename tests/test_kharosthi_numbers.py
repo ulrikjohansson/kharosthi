@@ -23,7 +23,8 @@ int_to_kharosthi = [
     (8,"𐩃𐩃"),
     (9,"𐩃𐩃𐩀"),
     (99, "𐩅𐩅𐩅𐩅𐩄𐩃𐩃𐩀"),
-    (1996, "𐩇𐩃𐩃𐩀𐩆𐩅𐩅𐩅𐩅𐩄𐩃𐩁")
+    (1996, "𐩇𐩃𐩃𐩀𐩆𐩅𐩅𐩅𐩅𐩄𐩃𐩁"),
+    (9999, "𐩃𐩃𐩀𐩇𐩃𐩃𐩀𐩆𐩅𐩅𐩅𐩅𐩄𐩃𐩃𐩀")
 ]
 
 @pytest.mark.parametrize("input, expected", int_to_kharosthi)
@@ -51,9 +52,20 @@ def test_negative_numbers_are_invalid():
     with pytest.raises(ValueError):
         num = KharosthiNumber.from_int(-1)
 
+    with pytest.raises(ValueError):
+        num = KharosthiNumber.from_int(5) - KharosthiNumber.from_int(6)
+
 def test_subtraction():
     num = KharosthiNumber.from_int(4) - KharosthiNumber.from_int(2)
     assert num == KharosthiNumber.from_int(2)
+
+def test_zero_is_invalid():
+    with pytest.raises(ValueError):
+        num = KharosthiNumber.from_int(0)
+
+    with pytest.raises(ValueError):
+        num2 = KharosthiNumber.from_int(5) - KharosthiNumber.from_int(5)
+
 
 def test_negative_results_are_invalid():
     with pytest.raises(ValueError):
@@ -65,7 +77,10 @@ def test_addition():
 
     assert num1 + num2 == KharosthiNumber.from_int(3350)
 
-def test_big_number():
-    num = KharosthiNumber.from_int(1_000_000)
-    
-    assert int(num) == 1_000_000
+def test_do_not_allow_numbers_over_9999():
+    number = 10_000
+    with pytest.raises(ValueError):
+        num = KharosthiNumber.from_int(number)
+
+    with pytest.raises(ValueError):
+        num1 = KharosthiNumber.from_int(5000) + KharosthiNumber.from_int(5000)
