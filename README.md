@@ -6,7 +6,7 @@ Currently only supports numbers less than 10000. The naive conversion algorithm 
 Also, 0 and negative integers are not representable in Kharosthi, and not valid numbers.
 
 ## Usage
-```
+```python
 from kharosthi import KharosthiNumber as K
 
 sum = K.from_int(5) + K.from_int(50)
