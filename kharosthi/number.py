@@ -45,7 +45,8 @@ class KharosthiNumber():
         # TODO: Calculate!
         # Find the biggest kharosthi common divisor(?)
         while number > 0:
-            if khar := cls.int_to_kharosthi.get(number):
+            khar = cls.int_to_kharosthi.get(number)
+            if khar:
                 result += khar
                 break
 
