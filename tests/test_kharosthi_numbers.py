@@ -84,3 +84,7 @@ def test_do_not_allow_numbers_over_9999():
 
     with pytest.raises(ValueError):
         num1 = KharosthiNumber.from_int(5000) + KharosthiNumber.from_int(5000)
+
+def test_equality_with_non_int_should_not_raise():
+    num = KharosthiNumber.from_int(1)
+    assert (num == object) is False

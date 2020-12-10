@@ -45,7 +45,8 @@ class KharosthiNumber():
         # TODO: Calculate!
         # Find the biggest kharosthi common divisor(?)
         while number > 0:
-            if khar := cls.int_to_kharosthi.get(number):
+            khar = cls.int_to_kharosthi.get(number)
+            if khar:
                 result += khar
                 break
 
@@ -124,8 +125,8 @@ class KharosthiNumber():
         return self.__class__.from_int(self.int_number - int(other))
 
     def __eq__(self, o: object) -> bool:
-        if isinstance(o, SupportsInt):
-            return self.int_number == int(o)
+        if hasattr(o, '__int__'):
+            return self.int_number == int(o) # type: ignore
         
         return False
 

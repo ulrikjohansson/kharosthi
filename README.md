@@ -5,6 +5,9 @@ Currently only supports numbers less than 10000. The naive conversion algorithm 
 
 Also, 0 and negative integers are not representable in Kharosthi, and not valid numbers.
 
+## Requirements
+Python >= 3.6
+
 ## Usage
 ```python
 from kharosthi import KharosthiNumber as K

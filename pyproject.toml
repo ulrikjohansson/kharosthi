@@ -6,7 +6,7 @@ authors = ["Ulrik Johansson <ulrik@ulrik.io>"]
 license = "MIT"
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.6"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.1.2"
