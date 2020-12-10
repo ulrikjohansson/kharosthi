@@ -1,9 +1,14 @@
 [tool.poetry]
-name = "kharosthi"
+name = "kharosthi.numbers"
 version = "0.1.0"
 description = "A module to represent kharosthi numbers"
 authors = ["Ulrik Johansson <ulrik@ulrik.io>"]
 license = "MIT"
+readme = "README.md"
+repository = "https://github.com/ulrikjohansson/kharosthi_numbers"
+packages = [
+    { include = "kharosthi" }
+]
 
 [tool.poetry.dependencies]
 python = "^3.6"
