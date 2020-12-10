@@ -1,7 +1,8 @@
 import re
 from typing import List, SupportsInt
 
-class KharosthiNumber():
+
+class KharosthiNumber:
 
     int_to_kharosthi = {
         1: "𐩀",
@@ -11,35 +12,33 @@ class KharosthiNumber():
         10: "𐩄",
         20: "𐩅",
         100: "𐩆",
-        1000: "𐩇"
+        1000: "𐩇",
     }
 
-    kharosthi_to_int = dict((v,k) for k,v in int_to_kharosthi.items())
+    kharosthi_to_int = dict((v, k) for k, v in int_to_kharosthi.items())
 
-    valid_regex = re.compile(r'[^𐩀𐩁𐩂𐩃𐩄𐩅𐩆𐩇]')
-
-    
+    valid_regex = re.compile(r"[^𐩀𐩁𐩂𐩃𐩄𐩅𐩆𐩇]")
 
     number: str
     int_number: int
 
-    def __init__(self, number:str) -> None:
+    def __init__(self, number: str) -> None:
         self.validate(number)
         self.number = number
         self.int_number = self._kharosthi_to_int(number)
 
-    def validate(self, number:str):
-        #check that the number is a string and only contains valid digits
+    def validate(self, number: str):
+        # check that the number is a string and only contains valid digits
         if not type(number) is str:
             raise ValueError("Invalid input: Not a string")
-        
+
         # check that it only contains valid characters
         # solution found here: https://stackoverflow.com/a/1325265/306458
         if bool(self.valid_regex.search(number)):
             raise ValueError("Invalid input: Contains invalid characters")
 
     @classmethod
-    def _int_to_kharosthi(cls, number:int) -> str:
+    def _int_to_kharosthi(cls, number: int) -> str:
         result = ""
 
         # TODO: Calculate!
@@ -50,18 +49,18 @@ class KharosthiNumber():
                 result += khar
                 break
 
-            gcd = 4 # start at 4, since all numbers 4 or below are directly representable with a kharosthi digit
+            gcd = 4  # start at 4, since all numbers 4 or below are directly representable with a kharosthi digit
             for key in cls.int_to_kharosthi.keys():
                 if key < number:
                     gcd = key
                     continue
                 break
-            
+
             quotitient, remainder = divmod(number, gcd)
             if gcd >= 100 and quotitient > 1:
                 result += cls._int_to_kharosthi(quotitient) + cls.int_to_kharosthi[gcd]
             else:
-                result += cls.int_to_kharosthi[gcd]*quotitient
+                result += cls.int_to_kharosthi[gcd] * quotitient
             number = remainder
 
         if result:
@@ -70,9 +69,9 @@ class KharosthiNumber():
         # we can't convert this number
         raise ValueError("Input can't be converted to a Kharosthi number")
 
-    def _kharosthi_to_int(self, number:str) -> int:
+    def _kharosthi_to_int(self, number: str) -> int:
         result = 0
-        #convert to list of ints
+        # convert to list of ints
         int_list = [self.kharosthi_to_int[x] for x in number]
 
         singles: List[int] = []
@@ -99,12 +98,14 @@ class KharosthiNumber():
         singles_sum = sum(singles)
         if singles_sum >= 100:
             raise ValueError("Invalid Kharosthi representation")
-        hundreds_sum = sum(hundreds)*100 if len(hundreds) else hundreds_present
+        hundreds_sum = sum(hundreds) * 100 if len(hundreds) else hundreds_present
         if hundreds_sum >= 1000:
             raise ValueError("Invalid Kharosthi representation")
-        thousands_sum = sum(thousands)*1000 if len(thousands) else thousands_present
+        thousands_sum = sum(thousands) * 1000 if len(thousands) else thousands_present
         if thousands_sum >= 10000:
-            raise ValueError("Invalid Kharosthi representation. Max representable number is 9999")
+            raise ValueError(
+                "Invalid Kharosthi representation. Max representable number is 9999"
+            )
 
         result = singles_sum + hundreds_sum + thousands_sum
 
@@ -125,13 +126,13 @@ class KharosthiNumber():
         return self.__class__.from_int(self.int_number - int(other))
 
     def __eq__(self, o: object) -> bool:
-        if hasattr(o, '__int__'):
-            return self.int_number == int(o) # type: ignore
-        
+        if hasattr(o, "__int__"):
+            return self.int_number == int(o)  # type: ignore
+
         return False
 
     @classmethod
-    def from_int(cls, int_number:int):
+    def from_int(cls, int_number: int):
         return cls(cls._int_to_kharosthi(int_number))
 
     def to_int(self) -> int:
