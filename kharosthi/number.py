@@ -125,8 +125,8 @@ class KharosthiNumber():
         return self.__class__.from_int(self.int_number - int(other))
 
     def __eq__(self, o: object) -> bool:
-        if isinstance(o, SupportsInt):
-            return self.int_number == int(o)
+        if hasattr(o, '__int__'):
+            return self.int_number == int(o) # type: ignore
         
         return False
 
