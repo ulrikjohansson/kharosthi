@@ -1,6 +1,6 @@
 import pytest
 
-from kharosthi import KharosthiNumber
+from kharosthi.numbers import KharosthiNumber
 
 
 def test_create():
