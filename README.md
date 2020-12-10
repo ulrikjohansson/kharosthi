@@ -10,7 +10,7 @@ Python >= 3.6
 
 ## Usage
 ```python
-from kharosthi import KharosthiNumber as K
+from kharosthi.numbers import KharosthiNumber as K
 
 sum = K.from_int(5) + K.from_int(50)
 
