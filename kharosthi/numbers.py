@@ -71,9 +71,12 @@ class KharosthiNumber:
 
     def _kharosthi_to_int(self, number: str) -> int:
         result = 0
-        # convert to list of ints
+        # convert to list of ints representing the individual numerals
         int_list = [self.kharosthi_to_int[x] for x in number]
 
+        
+        # kharosthi numerals are not homogenous like our arabic numerals (written the same regardless of magnitude)
+        # instead they are written in sections, and the lowest numbers do not have all the same numerals as the 100's and 1000's
         singles: List[int] = []
         hundreds: List[int] = []
         hundreds_present = 0
